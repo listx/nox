@@ -95,14 +95,6 @@ getOpts = cmdArgs $ progOpts
 		,  "ab"
 		,  "abc"
 		,  "*/"
-		, ""
-		, indent "echo \"a\\nab\\nabc\" | dc -l c -m"
-		, ""
-		,  "/* TIMESTAMP"
-		,  "a"
-		,  "ab"
-		,  "abc"
-		,  "*/"
 		]
 	where
 	indent = ("  "++)
