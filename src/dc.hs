@@ -84,24 +84,24 @@ getOpts = cmdArgs $ progOpts
 		, ""
 		, indent "echo \"a\\nab\\nabc\" | dc -l c"
 		, ""
-		,  "// a"
-		,  "// ab"
-		,  "// abc"
+		,  "//a"
+		,  "//ab"
+		,  "//abc"
 		, ""
 		, indent "echo \"a\\nab\\nabc\" | dc -l c -m"
 		, ""
 		,  "/*"
-		,  " a"
-		,  " ab"
-		,  " abc"
+		,  "a"
+		,  "ab"
+		,  "abc"
 		,  "*/"
 		, ""
-		, indent "echo \"a\\nab\\nabc\" | dc -l c -m -i \"    \""
+		, indent "echo \"a\\nab\\nabc\" | dc -l c -m"
 		, ""
 		,  "/* TIMESTAMP"
-		,  " a"
-		,  " ab"
-		,  " abc"
+		,  "a"
+		,  "ab"
+		,  "abc"
 		,  "*/"
 		]
 	where
@@ -141,7 +141,7 @@ cmdsCheck' Opts{..}
 makeCmt :: Opts -> T.Text -> T.Text
 makeCmt Opts{..} str
 	| multi = flip T.append mcbn $ T.append mcan str
-	| otherwise = T.unlines . map (\s -> T.append (T.append (showSingle lang) " ") s) $ T.lines str
+	| otherwise = T.unlines . map (T.append (showSingle lang)) $ T.lines str
 	where
 	(mca, mcb) = showMulti lang
 	mcan = T.append mca "\n"
@@ -162,4 +162,4 @@ remCmt Opts{..} str
 	| multi = T.unlines . init . tail $ T.lines str
 	| otherwise = T.unlines . map (T.drop n) $ T.lines str
 	where
-	n = (+1) . T.length $ showSingle lang
+	n = T.length $ showSingle lang
