@@ -4,13 +4,19 @@ import System.Exit
 import System.IO
 
 dquote :: String -> String
-dquote s = " \"" ++ s ++ "\" "
+dquote s = "\"" ++ s ++ "\""
 
 squote :: String -> String
-squote s = " `" ++ s ++ "' "
+squote s = "`" ++ s ++ "'"
 
 paren :: String -> String
-paren s = " (" ++ s ++ ") "
+paren s = "(" ++ s ++ ")"
+
+squote' :: String -> String
+squote' s = " `" ++ s ++ "' "
+
+paren' :: String -> String
+paren' s = " (" ++ s ++ ") "
 
 abort :: (String, Int) -> IO ()
 abort (msg, eid) = do

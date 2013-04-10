@@ -13,6 +13,36 @@ import System.IO
 
 import DC.Util
 
+cmtSingle :: Language -> T.Text
+cmtSingle l = case l of
+	C -> "//"
+	EmacsLisp -> ";"
+	Haskell -> "--"
+	HTML -> ""
+	Lilypond -> "%"
+	Shell -> "#"
+	TeX -> "%"
+
+cmtMulti :: Language -> (T.Text, T.Text)
+cmtMulti l = case l of
+	C -> ("/*", "*/")
+	EmacsLisp -> ("/*", "*/")
+	Haskell -> ("{-", "-}")
+	HTML -> ("<!--", "-->")
+	Lilypond -> ("%{", "%}")
+	Shell -> ("", "")
+	TeX -> ("", "")
+
+cmtLangExt :: Language -> String
+cmtLangExt l = case l of
+	C -> "c"
+	EmacsLisp -> "el"
+	Haskell -> "hs"
+	HTML -> "html"
+	Lilypond -> "ly"
+	Shell -> "sh"
+	TeX -> "tex"
+
 data Language
 	= C
 	| EmacsLisp
@@ -21,33 +51,10 @@ data Language
 	| Lilypond
 	| Shell
 	| TeX
-	deriving (Data, Eq, Typeable)
+	deriving (Data, Eq, Enum, Show, Typeable)
 
-instance Show Language where
-	show l = case l of
-		C -> "c"
-		EmacsLisp -> "el"
-		Haskell -> "hs"
-		HTML -> "html"
-		Lilypond -> "ly"
-		Shell -> "sh"
-		TeX -> "tex"
-
-data CommentDef = CommentDef
-	{ singleLine :: T.Text
-	, multiLine :: (T.Text, T.Text)
-	} deriving (Show)
-
-comments :: [(Language, CommentDef)]
-comments =
-	[ (C, CommentDef "//" ("/*", "*/"))
-	, (EmacsLisp, CommentDef ";" ("/*", "*/"))
-	, (Haskell, CommentDef "--" ("{-", "-}"))
-	, (HTML, CommentDef "" ("<!--", "-->"))
-	, (Lilypond, CommentDef "%" ("%{", "%}"))
-	, (Shell, CommentDef "#" ("", ""))
-	, (TeX, CommentDef "%" ("", ""))
-	]
+langs :: [Language]
+langs = enumFrom C
 
 data Opts = Opts
 	{ lang :: Language
@@ -58,19 +65,19 @@ data Opts = Opts
 progOpts :: Opts
 progOpts = Opts
 	{ lang = Shell &= typ "LANGUAGE" &= help ("language type; values are: "
-		++ names comments
-		++ "; default is sh for '#' comments")
+		++ names
+		++ "; default is `sh' for '#' comments")
 	, multi = False &= help "multi-line comment style (default is single); if \
 \the target language lacks multiline symbols, then the single-line symbol is used"
 	, uncomment = False &= help "uncomment the text; you only need to specify the \
 \particular language --- dc will take care of both the language's single and multiline symbols"
 	}
 	where
-	names :: [(Language, CommentDef)] -> String
-	names x = intercalate ", "
+	names :: String
+	names = intercalate ", "
 		$ zipWith (\a b -> a ++ " " ++ b)
-			(map (squote . show . fst) x)
-			(map (paren . show . snd) x)
+			(map (squote . cmtLangExt) langs)
+			(map (paren . show) langs)
 
 getOpts :: IO Opts
 getOpts = cmdArgs $ progOpts
@@ -127,31 +134,21 @@ cmdsCheck opts = do
 
 cmdsCheck' :: Opts -> IO (Int)
 cmdsCheck' Opts{..}
-	| not (elem lang (map fst comments)) = errMsg "unsupported language" >> return 1
+	| not (elem lang langs) = errMsg "unsupported language" >> return 1
 	| otherwise = return 0
 
 makeCmt :: Opts -> T.Text -> T.Text
 makeCmt Opts{..} str
 	| multi = flip T.append mcbn $ T.append mcan str
-	| otherwise = T.unlines . map (T.append (showSingle lang)) $ T.lines str
+	| otherwise = T.unlines . map (T.append (cmtSingle lang)) $ T.lines str
 	where
-	(mca, mcb) = showMulti lang
+	(mca, mcb) = cmtMulti lang
 	mcan = T.append mca "\n"
 	mcbn = T.append mcb "\n"
-
-showSingle :: Language -> T.Text
-showSingle l = case lookup l comments of
-	Just (CommentDef sc _) -> sc
-	_ -> error $ "Unknown language" ++ squote (show l)
-
-showMulti :: Language -> (T.Text, T.Text)
-showMulti l = case lookup l comments of
-	Just (CommentDef _ mc) -> mc
-	_ -> error $ "Unknown language" ++ squote (show l)
 
 remCmt :: Opts -> T.Text -> T.Text
 remCmt Opts{..} str
 	| multi = T.unlines . init . tail $ T.lines str
 	| otherwise = T.unlines . map (T.drop n) $ T.lines str
 	where
-	n = T.length $ showSingle lang
+	n = T.length $ cmtSingle lang
