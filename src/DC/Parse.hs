@@ -14,13 +14,11 @@ import Text.Parsec.Text.Lazy
 slineDetect :: String -> Parser String
 slineDetect x = do
 	leadSpace <- many $ oneOf " \t"
-	_ <- string leadingChars
+	_ <- string x
 	_ <- many $ char trailingChar
 	rest <- manyTill anyChar $ try eof
 	return $ leadSpace ++ rest
 	where
-	leadingChars :: String
-	leadingChars = init x
 	trailingChar :: Char
 	trailingChar = last x
 
