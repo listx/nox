@@ -16,7 +16,7 @@ slineDetect x = do
 	leadSpace <- many $ oneOf " \t"
 	_ <- string x
 	_ <- many $ char trailingChar
-	rest <- manyTill anyChar $ try eof
+	rest <- manyTill anyChar eof
 	return $ leadSpace ++ rest
 	where
 	trailingChar :: Char
@@ -24,9 +24,9 @@ slineDetect x = do
 
 mlineDetect :: (String, String) -> Parser String
 mlineDetect (a, b) = do
-	beg <- manyTill anyChar . lookAhead . try $ string a
+	beg <- manyTill anyChar . lookAhead $ string a
 	mid <- between (string a) (string b) (manyTill anyChar . lookAhead . try $ string b)
-	end <- manyTill anyChar $ try eof
+	end <- manyTill anyChar eof
 	return $ beg ++ mid ++ end
 
 -- | Check of a single line comment exists; if so, return the uncommented version of that line.
