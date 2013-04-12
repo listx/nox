@@ -32,7 +32,7 @@ cmtSingle l = case l of
 cmtMulti :: Language -> (T.Text, T.Text)
 cmtMulti l = case l of
 	C -> ("/*", "*/")
-	EmacsLisp -> ("/*", "*/")
+	EmacsLisp -> ("", "")
 	Haskell -> ("{-", "-}")
 	HTML -> ("<!--", "-->")
 	Lilypond -> ("%{", "%}")
