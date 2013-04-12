@@ -24,20 +24,24 @@ cmtSingle l = case l of
 	C -> "//"
 	EmacsLisp -> ";"
 	Haskell -> "--"
-	HTML -> ""
+	HTML -> x
 	Lilypond -> "%"
 	Shell -> "#"
 	TeX -> "%"
+	where
+	x = T.empty
 
 cmtMulti :: Language -> (T.Text, T.Text)
 cmtMulti l = case l of
 	C -> ("/*", "*/")
-	EmacsLisp -> ("", "")
+	EmacsLisp -> x
 	Haskell -> ("{-", "-}")
 	HTML -> ("<!--", "-->")
 	Lilypond -> ("%{", "%}")
-	Shell -> ("", "")
-	TeX -> ("", "")
+	Shell -> x
+	TeX -> x
+	where
+	x = (T.empty, T.empty)
 
 cmtLangExt :: Language -> String
 cmtLangExt l = case l of
