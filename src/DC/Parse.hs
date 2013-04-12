@@ -31,14 +31,18 @@ mlineDetect (a, b) = do
 
 -- | Check of a single line comment exists; if so, return the uncommented version of that line.
 slineCommentExists :: T.Text -> T.Text -> (Bool, T.Text)
-slineCommentExists src slineCmtStr = case parse (slineDetect slineCmtStr') [] src of
+slineCommentExists src slineCmtStr
+	| T.null slineCmtStr = (False, T.empty)
+	| otherwise = case parse (slineDetect slineCmtStr') [] src of
 	Left _ -> (False, T.empty)
 	Right str -> (True, T.pack str)
 	where
 	slineCmtStr' = T.unpack slineCmtStr
 
 mlineCommentExists :: T.Text -> (T.Text, T.Text) -> (Bool, T.Text)
-mlineCommentExists src (a, b) = case parse (mlineDetect (a', b')) [] src of
+mlineCommentExists src (a, b)
+	| T.null a && T.null b = (False, T.empty)
+	| otherwise = case parse (mlineDetect (a', b')) [] src of
 	Left _ -> (False, T.empty)
 	Right str -> (True, T.pack str)
 	where
