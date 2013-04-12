@@ -29,7 +29,8 @@ mlineDetect (a, b) = do
 	end <- manyTill anyChar eof
 	return $ beg ++ mid ++ end
 
--- | Check of a single line comment exists; if so, return the uncommented version of that line.
+-- | Check if a single line comment exists; if so, return the uncommented
+-- version of that line.
 slineCommentExists :: T.Text -> T.Text -> (Bool, T.Text)
 slineCommentExists src slineCmtStr
 	| T.null slineCmtStr = (False, T.empty)
