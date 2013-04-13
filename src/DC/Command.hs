@@ -9,17 +9,20 @@ import DC.Data
 import DC.Option
 import DC.Parse
 
--- | Comment text. For single-line comments, simply prepend each line with the
--- comment string. For multiline comments, prepend and append lines containing
--- just the multiline comment string pairs.
+-- | Comment text. For single-line comments, simply prepend each non-empty line
+-- with the comment string. For multiline comments, prepend and append lines
+-- containing just the multiline comment string pairs.
 makeCmt :: Opts -> T.Text -> T.Text
 makeCmt Opts{..} src
 	| multi = flip T.append mcbn $ T.append mcan src
-	| otherwise = T.unlines . map (T.append (cmtSingle lang)) $ T.lines src
+	| otherwise = T.unlines . map makeSingleComment $ T.lines src
 	where
 	(mca, mcb) = cmtMulti lang
 	mcan = T.append mca "\n"
 	mcbn = T.append mcb "\n"
+	makeSingleComment l = if T.null l
+		then l
+		else T.append (cmtSingle lang) l
 
 -- | Uncomment text. For single-line mode, remove all single-line comment
 -- characters found on each line independently of other lines. Continuous,
