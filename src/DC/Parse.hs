@@ -15,12 +15,8 @@ slineDetect :: String -> Parser String
 slineDetect x = do
 	leadSpace <- many $ oneOf " \t"
 	_ <- string x
-	_ <- many $ char trailingChar
 	rest <- manyTill anyChar eof
 	return $ leadSpace ++ rest
-	where
-	trailingChar :: Char
-	trailingChar = last x
 
 mlineDetect :: (String, String) -> Parser String
 mlineDetect (a, b) = do
