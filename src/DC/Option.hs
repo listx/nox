@@ -14,6 +14,7 @@ data Opts = Opts
 	{ lang :: Language
 	, multi :: Bool
 	, uncomment :: Bool
+	, sline :: String
 	} deriving (Data, Typeable, Show, Eq)
 
 progOpts :: Opts
@@ -25,6 +26,7 @@ progOpts = Opts
 \the target language lacks multiline symbols, then the single-line symbol is used"
 	, uncomment = False &= help "uncomment the text; you only need to specify the \
 \particular language --- dc will take care of both the language's single and multiline symbols"
+	, sline = [] &= typ "STRING" &= help "custom single-line comment string; overrides `-l' option"
 	}
 	where
 	names :: String

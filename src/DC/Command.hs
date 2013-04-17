@@ -15,14 +15,15 @@ import DC.Parse
 makeCmt :: Opts -> T.Text -> T.Text
 makeCmt Opts{..} src
 	| multi = flip T.append mcbn $ T.append mcan src
-	| otherwise = T.unlines . map makeSingleComment $ T.lines src
+	| otherwise = T.unlines . map (makeSingleComment sline) $ T.lines src
 	where
 	(mca, mcb) = cmtMulti lang
 	mcan = T.append mca "\n"
 	mcbn = T.append mcb "\n"
-	makeSingleComment l = if T.null l
-		then l
-		else T.append (cmtSingle lang) l
+	makeSingleComment sline' l
+		| T.null l = l
+		| not (null sline') = T.append (T.pack sline') l
+		| otherwise = T.append (cmtSingle lang) l
 
 -- | Uncomment text. For single-line mode, remove all single-line comment
 -- characters found on each line independently of other lines. Continuous,
@@ -35,11 +36,14 @@ remCmt Opts{..} src
 	| multi = case mlineCommentExists src $ cmtMulti lang of
 		(True, removed) -> removed
 		(False, _) -> src
-	| otherwise = T.unlines . map tryRemSlineComment $ T.lines src
+	| otherwise = T.unlines . map (tryRemSlineComment sline) $ T.lines src
 	where
-	tryRemSlineComment :: T.Text -> T.Text
-	tryRemSlineComment rawline = if scmtExists
+	tryRemSlineComment :: String -> T.Text -> T.Text
+	tryRemSlineComment sline' rawline = if scmtExists
 		then removed
 		else rawline
 		where
-		(scmtExists, removed) = slineCommentExists rawline $ cmtSingle lang
+		(scmtExists, removed) = slineCommentExists rawline $
+			if null sline'
+				then cmtSingle lang
+				else T.pack sline'
