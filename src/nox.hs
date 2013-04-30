@@ -9,9 +9,9 @@ import qualified Data.Text.Lazy.IO as T
 import System.Exit
 import System.IO
 
-import DC.Command
-import DC.Option
-import DC.Util
+import NOX.Command
+import NOX.Option
+import NOX.Util
 
 main :: IO ()
 main = do

@@ -1,14 +1,14 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module DC.Option where
+module NOX.Option where
 
 import Data.List (intercalate)
 import System.Console.CmdArgs.Implicit
 
-import DC.Data
-import DC.Meta
-import DC.Util
+import NOX.Data
+import NOX.Meta
+import NOX.Util
 
 data Opts = Opts
 	{ lang :: Language
@@ -25,7 +25,7 @@ progOpts = Opts
 	, multi = False &= help "multi-line comment style (default is single); if \
 \the target language lacks multiline symbols, then the single-line symbol is used"
 	, uncomment = False &= help "uncomment the text; you only need to specify the \
-\particular language --- dc will take care of both the language's single and multiline symbols"
+\particular language --- nox will take care of both the language's single and multiline symbols"
 	, sline = [] &= typ "STRING" &= help "custom single-line comment string; overrides `-l' option"
 	}
 	where
@@ -45,13 +45,13 @@ getOpts = cmdArgs $ progOpts
 	&= details
 		[ "Examples:"
 		, ""
-		, indent "echo \"a\\nab\\nabc\" | dc -l c"
+		, indent "echo \"a\\nab\\nabc\" | nox -l c"
 		, ""
 		,  "//a"
 		,  "//ab"
 		,  "//abc"
 		, ""
-		, indent "echo \"a\\nab\\nabc\" | dc -l c -m"
+		, indent "echo \"a\\nab\\nabc\" | nox -l c -m"
 		, ""
 		,  "/*"
 		,  "a"

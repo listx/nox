@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module DC.Parse where
+module NOX.Parse where
 
 import qualified Data.Text.Lazy as T
 import Text.Parsec.Char

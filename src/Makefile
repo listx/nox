@@ -1,16 +1,16 @@
 all:
-	ghc -O2 -Wall -fno-spec-constr-count -threaded --make dc
+	ghc -O2 -Wall -fno-spec-constr-count -threaded --make nox
 
 prod:
-	ghc -O2 -Wall -Werror -fno-spec-constr-count -threaded --make dc
+	ghc -O2 -Wall -Werror -fno-spec-constr-count -threaded --make nox
 
 prof:
-	ghc -rtsopts -prof -auto-all -O2 -v -Wall -Werror --make dc
-	./dc +RTS -p
+	ghc -rtsopts -prof -auto-all -O2 -v -Wall -Werror --make nox
+	./nox +RTS -p
 
 srclist:
 	$(shell find -type f -regex ".*\.hs" > srclist)
 
 clean:
-	$(RM) dc
+	$(RM) nox
 	find -type f -iregex ".+\.\(aux\|o\|hi\|hp\|mix\|ps\|tix\|html\)" -exec rm -v {} \;

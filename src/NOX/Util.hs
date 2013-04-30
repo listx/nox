@@ -1,4 +1,4 @@
-module DC.Util where
+module NOX.Util where
 
 import System.Exit
 import System.IO

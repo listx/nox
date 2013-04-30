@@ -1,13 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module DC.Command where
+module NOX.Command where
 
 import qualified Data.Text.Lazy as T
 
-import DC.Data
-import DC.Option
-import DC.Parse
+import NOX.Data
+import NOX.Option
+import NOX.Parse
 
 -- | Comment text. For single-line comments, simply prepend each non-empty line
 -- with the comment string. For multiline comments, prepend and append lines

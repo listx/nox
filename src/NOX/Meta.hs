@@ -1,7 +1,7 @@
-module DC.Meta where
+module NOX.Meta where
 
 _PROGRAM_NAME, _PROGRAM_VERSION, _PROGRAM_INFO, _COPYRIGHT :: String
-_PROGRAM_NAME = "dc"
+_PROGRAM_NAME = "nox"
 _PROGRAM_VERSION = "0.0.1"
 _PROGRAM_INFO = _PROGRAM_NAME ++ " version " ++ _PROGRAM_VERSION
 _COPYRIGHT = "(C) Linus Arver 2013"

@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module DC.Data where
+module NOX.Data where
 
 import Data.Data
 import qualified Data.Text.Lazy as T
