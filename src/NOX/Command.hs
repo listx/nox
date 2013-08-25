@@ -17,13 +17,13 @@ makeCmt Opts{..} src
 	| multi = flip T.append mcbn $ T.append mcan src
 	| otherwise = T.unlines . map (makeSingleComment sline) $ T.lines src
 	where
-	(mca, mcb) = cmtMulti lang
+	(mca, mcb) = ldCmtM lang
 	mcan = T.append mca "\n"
 	mcbn = T.append mcb "\n"
 	makeSingleComment sline' l
 		| T.null l = l
 		| not (null sline') = T.append (T.pack sline') l
-		| otherwise = T.append (cmtSingle lang) l
+		| otherwise = T.append (ldCmtS lang) l
 
 -- | Uncomment text. For single-line mode, remove all single-line comment
 -- characters found on each line independently of other lines. Continuous,
@@ -33,7 +33,7 @@ makeCmt Opts{..} src
 -- comment string pairs.
 remCmt :: Opts -> T.Text -> T.Text
 remCmt Opts{..} src
-	| multi = case mlineCommentExists src $ cmtMulti lang of
+	| multi = case mlineCommentExists src $ ldCmtM lang of
 		(True, removed) -> removed
 		(False, _) -> src
 	| otherwise = T.unlines . map (tryRemSlineComment sline) $ T.lines src
@@ -45,5 +45,5 @@ remCmt Opts{..} src
 		where
 		(scmtExists, removed) = slineCommentExists rawline $
 			if null sline'
-				then cmtSingle lang
+				then ldCmtS lang
 				else T.pack sline'

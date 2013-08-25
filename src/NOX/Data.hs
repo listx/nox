@@ -19,36 +19,37 @@ data Language
 langs :: [Language]
 langs = enumFrom C
 
-cmtSingle :: Language -> T.Text
-cmtSingle l = case l of
-	C -> "//"
-	EmacsLisp -> ";"
-	Haskell -> "--"
-	HTML -> x
-	Lilypond -> "%"
-	Shell -> "#"
-	TeX -> "%"
-	where
-	x = T.empty
+class LangDesc a where
+	ldCmtS :: a -> T.Text
+	ldCmtM :: a -> (T.Text, T.Text)
+	ldExt :: a -> String
 
-cmtMulti :: Language -> (T.Text, T.Text)
-cmtMulti l = case l of
-	C -> ("/*", "*/")
-	EmacsLisp -> x
-	Haskell -> ("{-", "-}")
-	HTML -> ("<!--", "-->")
-	Lilypond -> ("%{", "%}")
-	Shell -> x
-	TeX -> x
-	where
-	x = (T.empty, T.empty)
-
-cmtLangExt :: Language -> String
-cmtLangExt l = case l of
-	C -> "c"
-	EmacsLisp -> "el"
-	Haskell -> "hs"
-	HTML -> "html"
-	Lilypond -> "ly"
-	Shell -> "sh"
-	TeX -> "tex"
+instance LangDesc Language where
+	ldCmtS l = case l of
+		C -> "//"
+		EmacsLisp -> ";"
+		Haskell -> "--"
+		HTML -> x
+		Lilypond -> "%"
+		Shell -> "#"
+		TeX -> "%"
+		where
+		x = T.empty
+	ldCmtM l = case l of
+		C -> ("/*", "*/")
+		EmacsLisp -> x
+		Haskell -> ("{-", "-}")
+		HTML -> ("<!--", "-->")
+		Lilypond -> ("%{", "%}")
+		Shell -> x
+		TeX -> x
+		where
+		x = (T.empty, T.empty)
+	ldExt l = case l of
+		C -> "c"
+		EmacsLisp -> "el"
+		Haskell -> "hs"
+		HTML -> "html"
+		Lilypond -> "ly"
+		Shell -> "sh"
+		TeX -> "tex"
