@@ -3,20 +3,24 @@ module NOX.Util where
 import System.Exit
 import System.IO
 
-dquote :: String -> String
-dquote s = "\"" ++ s ++ "\""
+enclose :: (String, String) -> String -> String
+enclose (a, b) w = a ++ w ++ b
 
-squote :: String -> String
-squote s = "`" ++ s ++ "'"
+enclose' :: (String, String) -> String -> String
+enclose' pair = enclose sSpaces . enclose pair
 
-paren :: String -> String
-paren s = "(" ++ s ++ ")"
-
-squote' :: String -> String
-squote' s = " `" ++ s ++ "' "
-
-paren' :: String -> String
-paren' s = " (" ++ s ++ ") "
+dQuotes
+	, sQuotes
+	, parens
+	, bracks
+	, braces
+	, sSpaces :: (String, String)
+dQuotes = ("\"", "\"")
+sQuotes = ("`", "'")
+parens = ("(", ")")
+bracks = ("[", "]")
+braces = ("{", "}")
+sSpaces = (" ", " ")
 
 abort :: (String, Int) -> IO ()
 abort (msg, eid) = do

@@ -13,9 +13,9 @@ import NOX.Parse
 -- with the comment string. For multiline comments, prepend and append lines
 -- containing just the multiline comment string pairs.
 makeCmt :: Opts -> T.Text -> T.Text
-makeCmt Opts{..} src
-	| multi = flip T.append mcbn $ T.append mcan src
-	| otherwise = T.unlines . map (makeSingleComment sline) $ T.lines src
+makeCmt Opts{..}
+	| multi = flip T.append mcbn . T.append mcan
+	| otherwise = T.unlines . map (makeSingleComment sline) . T.lines
 	where
 	(mca, mcb) = ldCmtM lang
 	mcan = T.append mca "\n"

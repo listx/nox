@@ -32,8 +32,8 @@ progOpts = Opts
 	names :: String
 	names = intercalate ", "
 		$ zipWith (\a b -> a ++ " " ++ b)
-			(map (squote . ldExt) langs)
-			(map (paren . show) langs)
+			(map (enclose sQuotes . ldExt) langs)
+			(map (enclose parens . show) langs)
 
 getOpts :: IO Opts
 getOpts = cmdArgs $ progOpts
