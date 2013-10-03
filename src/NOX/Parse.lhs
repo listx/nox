@@ -1,3 +1,4 @@
+\begin{code}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -44,3 +45,4 @@ mlineCommentExists src (a, b)
 		Right str -> (True, T.pack str)
 	where
 	(a', b') = (T.unpack a, T.unpack b)
+\end{code}

@@ -1,3 +1,4 @@
+\begin{code}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -71,3 +72,4 @@ cmdsCheck' :: Opts -> IO (Int)
 cmdsCheck' Opts{..}
 	| not (elem lang langs) = errMsg "unsupported language" >> return 1
 	| otherwise = return 0
+\end{code}

@@ -9,7 +9,7 @@ prof:
 	./nox +RTS -p
 
 srclist:
-	$(shell find -type f -regex ".*\.hs" > srclist)
+	$(shell find -type f -regex ".*\.lhs" > srclist)
 
 clean:
 	$(RM) nox

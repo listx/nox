@@ -1,3 +1,4 @@
+\begin{code}
 module NOX.Util where
 
 import System.Exit
@@ -30,3 +31,4 @@ abort (msg, eid) = do
 
 errMsg :: String -> IO ()
 errMsg msg = hPutStrLn stderr $ "error: " ++ msg
+\end{code}

@@ -1,3 +1,4 @@
+\begin{code}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -27,3 +28,4 @@ main' opts@Opts{..} = do
 	text <- T.hGetContents stdin
 	when (T.null text) $ abort ("nothing from STDIN", 1)
 	T.putStr $ (if uncomment then remCmt else makeCmt) opts' text
+\end{code}

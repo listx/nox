@@ -1,3 +1,4 @@
+\begin{code}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE OverloadedStrings #-}
 
@@ -53,3 +54,4 @@ instance LangDesc Language where
 		Lilypond -> "ly"
 		Shell -> "sh"
 		TeX -> "tex"
+\end{code}

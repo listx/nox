@@ -1,3 +1,4 @@
+\begin{code}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
@@ -47,3 +48,4 @@ remCmt Opts{..} src
 			if null sline'
 				then ldCmtS lang
 				else T.pack sline'
+\end{code}
