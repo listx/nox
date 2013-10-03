@@ -1,3 +1,5 @@
+\section{NOX/Meta.lhs}
+
 \begin{code}
 module NOX.Meta where
 

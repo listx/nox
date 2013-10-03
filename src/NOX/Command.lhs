@@ -1,3 +1,5 @@
+\section{NOX/Command.lhs}
+
 \begin{code}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}

@@ -1,3 +1,9 @@
 *.o
 *.hi
+
+*.aux
+*.log
+*.out
+*.pdf
+
 nox

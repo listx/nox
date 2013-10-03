@@ -1,3 +1,5 @@
+\section{NOX/Util.lhs}
+
 \begin{code}
 module NOX.Util where
 

@@ -1,3 +1,5 @@
+\section{NOX/Option.lhs}
+
 \begin{code}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE RecordWildCards #-}

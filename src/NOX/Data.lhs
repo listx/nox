@@ -1,3 +1,5 @@
+\section{NOX/Data.lhs}
+
 \begin{code}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE OverloadedStrings #-}
