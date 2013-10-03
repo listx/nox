@@ -21,7 +21,9 @@ main = do
 	hSetBuffering stderr NoBuffering
 	opts <- getOpts
 	(opts', argsErrNo) <- argsCheck opts
-	when (argsErrNo > 0) . exitWith $ ExitFailure argsErrNo
+	when (argsErrNo > 0) $ do
+		errMsg $ "code " ++ show argsErrNo
+		exitWith $ ExitFailure argsErrNo
 	text <- T.hGetContents stdin
 	when (T.null text) . abort $ (,) "nothing from STDIN" 1
 	T.putStr $ (if uncomment opts' then remCmt else makeCmt) opts' text
