@@ -11,7 +11,7 @@ import qualified Data.Text.Lazy.IO as T
 import System.Exit
 import System.IO
 
-import NOX.Command
+import NOX.Core
 import NOX.Option
 import NOX.Util
 

@@ -9,7 +9,7 @@ module NOX.Option where
 import Data.List (intercalate)
 import System.Console.CmdArgs.Implicit
 
-import NOX.Data
+import NOX.Language
 import NOX.Meta
 import NOX.Util
 

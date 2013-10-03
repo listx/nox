@@ -1,14 +1,14 @@
-\section{NOX/Command.lhs}
+\section{NOX/Core.lhs}
 
 \begin{code}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module NOX.Command where
+module NOX.Core where
 
 import qualified Data.Text.Lazy as T
 
-import NOX.Data
+import NOX.Language
 import NOX.Option
 import NOX.Parse
 

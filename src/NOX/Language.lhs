@@ -1,10 +1,10 @@
-\section{NOX/Data.lhs}
+\section{NOX/Language.lhs}
 
 \begin{code}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module NOX.Data where
+module NOX.Language where
 
 import Data.Data
 import qualified Data.Text.Lazy as T
