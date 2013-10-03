@@ -64,9 +64,7 @@ getOpts = cmdArgs $ progOpts
 		]
 
 argsCheck :: Opts -> IO (Opts, Int)
-argsCheck opts = do
-	errVal <- argsCheck' opts
-	return (opts, errVal)
+argsCheck opts = return . (,) opts =<< argsCheck' opts
 	where
 	argsCheck' :: Opts -> IO (Int)
 	argsCheck' Opts{..}
