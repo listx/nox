@@ -63,13 +63,13 @@ getOpts = cmdArgs $ progOpts
 		,  "*/"
 		]
 
-cmdsCheck :: Opts -> IO (Opts, Int)
-cmdsCheck opts = do
-	errVal <- cmdsCheck' opts
+argsCheck :: Opts -> IO (Opts, Int)
+argsCheck opts = do
+	errVal <- argsCheck' opts
 	return (opts, errVal)
 	where
-	cmdsCheck' :: Opts -> IO (Int)
-	cmdsCheck' Opts{..}
+	argsCheck' :: Opts -> IO (Int)
+	argsCheck' Opts{..}
 		| not (elem lang langs) = errMsg "unsupported language" >> return 1
 		| otherwise = return 0
 \end{code}

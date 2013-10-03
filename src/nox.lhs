@@ -20,8 +20,8 @@ main = do
 	hSetBuffering stdout NoBuffering
 	hSetBuffering stderr NoBuffering
 	opts <- getOpts
-	(opts', cmdsErrNo) <- cmdsCheck opts
-	when (cmdsErrNo > 0) $ exitWith $ ExitFailure cmdsErrNo
+	(opts', argsErrNo) <- argsCheck opts
+	when (argsErrNo > 0) $ exitWith $ ExitFailure argsErrNo
 	text <- T.hGetContents stdin
 	when (T.null text) $ abort ("nothing from STDIN", 1)
 	T.putStr $ (if uncomment opts' then remCmt else makeCmt) opts' text
