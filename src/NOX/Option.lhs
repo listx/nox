@@ -7,6 +7,7 @@
 module NOX.Option where
 
 import Data.List (intercalate)
+import qualified Data.Text.Lazy as T
 import System.Console.CmdArgs.Implicit
 
 import NOX.Language
@@ -77,5 +78,9 @@ argsCheck opts = return . (,) opts =<< argsCheck' opts
 	argsCheck' :: Opts -> IO (Int)
 	argsCheck' Opts{..}
 		| not (elem lang langs) = errMsg "unsupported language" >> return 1
+		| multi && noMulti && noSingle = errMsg "--multi requested, but language supports neither multiline nor single-line comments" >> return 1
 		| otherwise = return 0
+		where
+		noMulti = T.null . uncurry T.append $ ldCmtM lang
+		noSingle = T.null $ ldCmtS lang
 \end{code}
