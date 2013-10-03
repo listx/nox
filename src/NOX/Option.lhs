@@ -62,7 +62,15 @@ getOpts = cmdArgs $ progOpts
 		,  "abc"
 		,  "*/"
 		]
+\end{code}
 
+The options are defined by the \ct{Opts} data type, and we write our version of it with \ct{progOpts}.
+We add some more customizations to how \ct{nox} will behave (e.g., \ct{-h} and \ct{-v} flags) with \ct{getOpts}.
+This is standard practice for writing command line options with the \ct{CmdArgs} library.
+
+The \ct{argsCheck} function below checks for errors, and returns an error code.
+
+\begin{code}
 argsCheck :: Opts -> IO (Opts, Int)
 argsCheck opts = return . (,) opts =<< argsCheck' opts
 	where

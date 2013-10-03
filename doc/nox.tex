@@ -38,12 +38,18 @@
 
 % intra-document hyperlinks
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
+
 \begin{document}
+\title{The nox Source Manual}
+\author{Linus Arver}
+\date{October 2013}
+\maketitle
+\tableofcontents
 \input{intro.tex}
 \input{../src/nox.lhs}
 \input{../src/NOX/Option.lhs}
-\input{../src/NOX/Data.lhs}
-\input{../src/NOX/Command.lhs}
+\input{../src/NOX/Language.lhs}
+\input{../src/NOX/Core.lhs}
 \input{../src/NOX/Parse.lhs}
 \input{../src/NOX/Util.lhs}
 \input{../src/NOX/Meta.lhs}
