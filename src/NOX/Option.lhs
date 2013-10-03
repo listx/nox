@@ -48,13 +48,13 @@ getOpts = cmdArgs $ progOpts
 	&= details
 		[ "Examples:"
 		, ""
-		, indent "echo \"a\\nab\\nabc\" | nox -l c"
+		, "  echo \"a\\nab\\nabc\" | nox -l c"
 		, ""
 		,  "//a"
 		,  "//ab"
 		,  "//abc"
 		, ""
-		, indent "echo \"a\\nab\\nabc\" | nox -l c -m"
+		, "  echo \"a\\nab\\nabc\" | nox -l c -m"
 		, ""
 		,  "/*"
 		,  "a"
@@ -62,16 +62,14 @@ getOpts = cmdArgs $ progOpts
 		,  "abc"
 		,  "*/"
 		]
-	where
-	indent = ("  "++)
 
 cmdsCheck :: Opts -> IO (Opts, Int)
 cmdsCheck opts = do
 	errVal <- cmdsCheck' opts
 	return (opts, errVal)
-
-cmdsCheck' :: Opts -> IO (Int)
-cmdsCheck' Opts{..}
-	| not (elem lang langs) = errMsg "unsupported language" >> return 1
-	| otherwise = return 0
+	where
+	cmdsCheck' :: Opts -> IO (Int)
+	cmdsCheck' Opts{..}
+		| not (elem lang langs) = errMsg "unsupported language" >> return 1
+		| otherwise = return 0
 \end{code}
