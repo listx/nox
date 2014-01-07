@@ -8,3 +8,5 @@
 *.toc
 
 nox
+doc/watch
+doc/nox-versioned.tex
