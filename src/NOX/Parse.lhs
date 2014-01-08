@@ -12,24 +12,29 @@ import Text.Parsec.Combinator
 import Text.Parsec.Prim
 import Text.Parsec.Text.Lazy
 
--- | Find x in the string; skip any leading whitespace. Return the line without
--- the (leading) comment chars.
 slineDetect :: String -> Parser String
 slineDetect x = do
 	leadSpace <- many $ oneOf " \t"
 	_ <- string x
 	rest <- manyTill anyChar eof
 	return $ leadSpace ++ rest
+\end{code}
 
+\ct{slineDetect} tries to find the given needle string \ct{x}.
+We make sure to skip any leading whitespace, and then return the line without the (leading) comment characters.
+
+\begin{code}
 mlineDetect :: (String, String) -> Parser String
 mlineDetect (a, b) = do
 	beg <- manyTill anyChar . lookAhead $ string a
 	mid <- between (string a) (string b) (manyTill anyChar . lookAhead . try $ string b)
 	end <- manyTill anyChar eof
 	return $ beg ++ mid ++ end
+\end{code}
 
--- | Check if a single line comment exists; if so, return the uncommented
--- version of that line.
+This is just like \ct{slineDetect}, but for multiline comment strings.
+
+\begin{code}
 slineCommentExists :: T.Text -> T.Text -> (Bool, T.Text)
 slineCommentExists src slineCmtStr
 	| T.null slineCmtStr = (False, T.empty)
@@ -38,7 +43,11 @@ slineCommentExists src slineCmtStr
 		Right str -> (True, T.pack str)
 	where
 	slineCmtStr' = T.unpack slineCmtStr
+\end{code}
 
+Here we check if a single line comment exists; if so, we return the uncommented version of that line.
+
+\begin{code}
 mlineCommentExists :: T.Text -> (T.Text, T.Text) -> (Bool, T.Text)
 mlineCommentExists src (a, b)
 	| T.null a && T.null b = (False, T.empty)
@@ -48,3 +57,5 @@ mlineCommentExists src (a, b)
 	where
 	(a', b') = (T.unpack a, T.unpack b)
 \end{code}
+
+This is the multi-line counterpart of \ct{slineCommentExists}.

@@ -35,4 +35,4 @@ main = do
 \end{code}
 
 This is the main program section and handles all arguments passed to \ct{nox}.
-The given options are first checked for sanity before \ct{nox} does anything; if there is an error encountered, we exit prematurely.
+The given options are first checked for sanity before \ct{nox} does anything; if we encounter an error, we exit immediately.

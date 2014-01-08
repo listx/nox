@@ -24,7 +24,11 @@ parens = ("(", ")")
 bracks = ("[", "]")
 braces = ("{", "}")
 sSpaces = (" ", " ")
+\end{code}
 
+These two functions make it easier to surround text with a given pair of strings.
+
+\begin{code}
 abort :: (String, Int) -> IO ()
 abort (msg, eid) = do
     errMsg msg
@@ -34,3 +38,5 @@ abort (msg, eid) = do
 errMsg :: String -> IO ()
 errMsg msg = hPutStrLn stderr $ "error: " ++ msg
 \end{code}
+
+These are some basic error-logging/exiting functions.

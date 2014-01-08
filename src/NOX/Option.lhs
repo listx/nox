@@ -26,11 +26,15 @@ progOpts = Opts
 	{ lang = Shell &= typ "LANGUAGE" &= help ("language type; values are: "
 		++ names
 		++ "; default is `sh' for '#' comments")
-	, multi = False &= help "multi-line comment style (default is single); if \
-\the target language lacks multiline symbols, then the single-line symbol is used"
-	, uncomment = False &= help "uncomment the text; you only need to specify the \
-\particular language --- nox will take care of both the language's single and multiline symbols"
-	, sline = [] &= typ "STRING" &= help "custom single-line comment string; overrides `-l' option"
+	, multi = False
+		&= help "multi-line comment style (default is single); if the target language\
+			\ lacks multiline symbols, then the single-line symbol is used"
+	, uncomment = False
+		&= help "uncomment the text; you only need to specify the particular language\
+			\ --- nox will take care of both the language's single and multiline\
+			\ symbols"
+	, sline = [] &= typ "STRING"
+		&= help "custom single-line comment string; overrides `-l' option"
 	}
 	where
 	names :: String
@@ -69,8 +73,6 @@ The options are defined by the \ct{Opts} data type, and we write our version of 
 We add some more customizations to how \ct{nox} will behave (e.g., \ct{-h} and \ct{-v} flags) with \ct{getOpts}.
 This is standard practice for writing command line options with the \ct{CmdArgs} library.
 
-The \ct{argsCheck} function below checks for errors, and returns an error code.
-
 \begin{code}
 argsCheck :: Opts -> IO (Opts, Int)
 argsCheck opts = return . (,) opts =<< argsCheck' opts
@@ -78,9 +80,14 @@ argsCheck opts = return . (,) opts =<< argsCheck' opts
 	argsCheck' :: Opts -> IO (Int)
 	argsCheck' Opts{..}
 		| not (elem lang langs) = errMsg "unsupported language" >> return 1
-		| multi && noMulti && noSingle = errMsg "--multi requested, but language supports neither multiline nor single-line comments" >> return 1
+		| multi && noMulti && noSingle
+			= errMsg "--multi requested, but language supports neither multiline nor\
+				\ single-line comments"
+			>> return 1
 		| otherwise = return 0
 		where
 		noMulti = T.null . uncurry T.append $ ldCmtM lang
 		noSingle = T.null $ ldCmtS lang
 \end{code}
+
+Check for errors, and return an error code (a positive number) if any errors are found.

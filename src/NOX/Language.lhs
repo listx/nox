@@ -18,7 +18,11 @@ data Language
 	| Shell
 	| TeX
 	deriving (Data, Eq, Enum, Show, Typeable)
+\end{code}
 
+\ct{Language} defines the language types recognized by \ct{nox}.
+
+\begin{code}
 langs :: [Language]
 langs = enumFrom C
 
@@ -57,3 +61,5 @@ instance LangDesc Language where
 		Shell -> "sh"
 		TeX -> "tex"
 \end{code}
+
+The \ct{LangDesc} class defines comment strings and also the extension type of a particular language.

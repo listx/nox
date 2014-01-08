@@ -12,9 +12,6 @@ import NOX.Language
 import NOX.Option
 import NOX.Parse
 
--- | Comment text. For single-line comments, simply prepend each non-empty line
--- with the comment string. For multiline comments, prepend and append lines
--- containing just the multiline comment string pairs.
 makeCmt :: Opts -> T.Text -> T.Text
 makeCmt Opts{..}
 	| multi = flip T.append mcbn . T.append mcan
@@ -27,13 +24,13 @@ makeCmt Opts{..}
 		| T.null l = l
 		| not (null sline') = T.append (T.pack sline') l
 		| otherwise = T.append (ldCmtS lang) l
+\end{code}
 
--- | Uncomment text. For single-line mode, remove all single-line comment
--- characters found on each line independently of other lines. Continuous,
--- trailing characters that are the same as the last single-line comment
--- character are also removed (e.g., "//" is removed but so is "///" or
--- "///////". For multiline comments, simply find and remove the mulitline
--- comment string pairs.
+\ct{makeCmt} comments out the given chunk of text.
+For single-line comments, simply prepend each non-empty line with the comment string.
+For multiline comments, we prepend and append lines containing just the multiline comment string pairs.
+
+\begin{code}
 remCmt :: Opts -> T.Text -> T.Text
 remCmt Opts{..} src
 	| multi = case mlineCommentExists src $ ldCmtM lang of
@@ -51,3 +48,7 @@ remCmt Opts{..} src
 				then ldCmtS lang
 				else T.pack sline'
 \end{code}
+
+\ct{remCmt} uncomments a given chunk of (probably commented) text.
+For single-line mode, remove all single-line comment characters found on each line independently of other lines.
+For multiline comments, we find and remove the mulitline comment string pairs.
