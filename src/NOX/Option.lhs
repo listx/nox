@@ -19,6 +19,7 @@ data Opts = Opts
 	, multi :: Bool
 	, uncomment :: Bool
 	, sline :: String
+	, after_lw :: Bool
 	} deriving (Data, Typeable, Show, Eq)
 
 progOpts :: Opts
@@ -35,6 +36,7 @@ progOpts = Opts
 			\ symbols"
 	, sline = [] &= typ "STRING"
 		&= help "custom single-line comment string; overrides `-l' option"
+	, after_lw = False &= help "for single-line comments, should we prepend it at the beginning of the line, or add it just after any leading whitespace?"
 	}
 	where
 	names :: String
