@@ -24,7 +24,7 @@ makeCmt Opts{..}
 		| T.null l = l
 		| not (null sline') = if after_lw
 			then (\(a, b) -> T.concat [a, T.pack sline', b])
-				$ T.span (flip elem " \t") l
+				$ T.span (flip elem (" \t" :: String)) l
 			else T.append (T.pack sline') l
 		| otherwise = T.append (ldCmtS lang) l
 \end{code}
