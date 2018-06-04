@@ -12,6 +12,13 @@ Executable nox
   Main-is: nox.lhs
   Hs-source-dirs: src
   Ghc-options: -Wall -Werror -O2 -threaded -fno-warn-tabs
+  other-modules:
+      NOX.Core
+    , NOX.Language
+    , NOX.Meta
+    , NOX.Option
+    , NOX.Parse
+    , NOX.Util
   Build-Depends: base >= 3
     , cmdargs >= 0.8
     , parsec >= 3.0.0
